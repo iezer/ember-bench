@@ -29,7 +29,8 @@ h2 "Projects"
 
 $PROJECTS = parse_json("config/projects.json")
 
-["app", "ember", "glimmer"].each do |project|
+# ["app", "ember", "glimmer"].each do |project|
+["app"].each do |project|
   puts project
   config = $PROJECTS[project]
 
@@ -72,13 +73,14 @@ $EXPERIMENTS.each_with_index do |experiment, i|
     check "  Has valid name", false, error_message: "#{experiment['name']} is not a valid name: names can only contain lowercase letters, numbers and dashes"
   end
 
-  in_ember(silent: true) do
-    if run "git branch | grep '^ *#{experiment["name"]}$'", silent: true, allow_failure: true
-      check "  Is not an existing Ember branch", false, error_message: "#{experiment['name']} is an existing branch in Ember, please pick a different name"
-    end
-  end
+  # in_ember(silent: true) do
+  #   if run "git branch | grep '^ *#{experiment["name"]}$'", silent: true, allow_failure: true
+  #     check "  Is not an existing Ember branch", false, error_message: "#{experiment['name']} is an existing branch in Ember, please pick a different name"
+  #   end
+  # end
 
-  ["app", "ember", "glimmer"].each do |project|
+#  ["app", "ember", "glimmer"].each do |project|
+  ["app"].each do |project|
     Dir.chdir($PROJECTS[project]["path"]) do
       puts "  #{project}"
 
@@ -91,5 +93,3 @@ $EXPERIMENTS.each_with_index do |experiment, i|
 end
 
 h1 "LGTM!", color: :green
-
-
