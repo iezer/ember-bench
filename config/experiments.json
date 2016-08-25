@@ -1,0 +1,10 @@
+[
+  {
+    "name":    "master",
+    "app":     "rwjblue-benchmarking-stuff"
+  },
+  {
+    "name":    "old",
+    "app":     "isaac-bench"
+  }
+]
