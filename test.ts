@@ -27,10 +27,10 @@ const DATA = {
 
 class MyInitialRenderBenchmark extends InitialRenderBenchmark {
   constructor(name: string) {
+    let port = name === 'master' ? 9292 : 9293;
     super({
       name,
-      //      url: `http://localhost:9292/?tracing`,
-      url: 'http://localhost.twitch.tv:9292/',
+      url: `http://localhost.twitch.tv:${port}/lirik`,
       markers: [
         { start: "domLoading", label: "load" },
       ],
@@ -49,22 +49,23 @@ class MyInitialRenderBenchmark extends InitialRenderBenchmark {
       document.cookie = "/index-${this.name}.html";
     `);
 
-    await tab.navigate('http://localhost:9292/404', true);
+    let port = this.name === 'master' ? 9292 : 9293;
+    await tab.navigate(`http://localhost.twitch.tv:${port}/app/404`, true);
 
     await new Promise(resolve => setTimeout(resolve, 2500));
 
-    await tab.removeScriptToEvaluateOnLoad(id);
+    // await tab.removeScriptToEvaluateOnLoad(id);
 
-    await tab.navigate(`http://localhost:9292/?cached`, true);
+    // await tab.navigate(`http://localhost.twitch.tv:${port}/app?cached`, true);
 
-    await new Promise(resolve => setTimeout(resolve, 2500));
+    // await new Promise(resolve => setTimeout(resolve, 2500));
 
-    await tab.navigate(`http://localhost:9292/?tracing`, true);
+    // await tab.navigate(`http://localhost.twitch.tv:${port}/?tracing`, true);
   }
 }
 
 new Runner(process.argv.slice(2).map(exp => new MyInitialRenderBenchmark(exp)))
-.run(50)
+.run(10)
 .then(results => {
   results.forEach(result => {
     fs.writeFileSync(`results/${result.set}.json`, JSON.stringify(result))
