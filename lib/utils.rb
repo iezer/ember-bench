@@ -191,6 +191,10 @@ module Utils
     experiments.each { |experiment| yield experiment }
   end
 
+  def custom_ember_glimmer
+    @custom_ember_glimmer ||= experiments.all? { |e| e["ember"] && e["glimer"] }
+  end
+
   def kill_puma!
     pid = read_file('tmp/puma.pid').strip.to_i
 
