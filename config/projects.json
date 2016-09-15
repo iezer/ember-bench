@@ -1,0 +1,6 @@
+{
+  "app": {
+    "path": "../web-client",
+    "build": "PROFILING=initial-render ember build -prod"
+  }
+}
